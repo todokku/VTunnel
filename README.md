@@ -14,6 +14,11 @@ VPN connection hides the IP by the IP of the exit node, however, your ISP can st
 
 Use TCPDump or WinDump.
 
+##Server Side Configuration
+
+See Link: 
+https://web.archive.org/web/20190909122510/https://bencane.com/2017/04/15/using-stunnel-and-tinyproxy-to-hide-http-traffic/
+
 ## How to build?
 
 Use build script in the directory of the source code.
