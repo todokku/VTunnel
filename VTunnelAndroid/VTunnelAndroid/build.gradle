@@ -1,0 +1,43 @@
+
+buildscript {
+   repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.1'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+task release(type: Zip) {
+    archiveBaseName ="${APP_NAME}_v${VERSION_NAME}"
+    destinationDirectory = file("${projectDir}")
+    from rootProject.rootDir
+    include '*'
+    include 'gradle/**'
+    include 'images/**'
+    include 'app/**'
+    exclude 'build'
+    exclude 'app/.externalNativeBuild'
+    exclude 'app/libs'
+    exclude 'app/build'
+    exclude '.git'
+    exclude '.gradle'
+    exclude '.idea'
+    exclude 'local.properties'
+    exclude '*.zip'
+}
