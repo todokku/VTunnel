@@ -43,8 +43,11 @@
 	<string-array name="pref_disallowed_application_value"></string-array>
 
 	<string name="pref_trusted_ca_list">trusted CA list</string>
+    <string name="google_search">Google Search</string>
+	<string name="searchButton">Search!</string>
+    <string name="image_search">Image Search</string>
 
-	<string-array name="pref_trusted_ca_name"></string-array>
+    <string-array name="pref_trusted_ca_name"></string-array>
 	<string-array name="pref_trusted_ca_value"></string-array>
 
 

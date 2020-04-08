@@ -6,7 +6,7 @@ android {
         applicationId "com.vtunnel"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 100016
+        versionCode 100018
         versionName VERSION_NAME
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
@@ -73,6 +73,7 @@ dependencies {
     implementation "androidx.preference:preference:1.1.0"
     // jsoup HTML parser library @ https://jsoup.org/
     implementation "org.jsoup:jsoup:1.13.1"
+    implementation "com.thefinestartist:finestwebview:1.2.7"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'

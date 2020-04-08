@@ -53,6 +53,14 @@
                 android:value="tun.proxy.MainActivity" />
         </activity>
 
+        <activity
+            android:name="com.thefinestartist.finestwebview.FinestWebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="sensor"
+            android:theme="@style/FinestWebViewTheme.Light"/>
+
+        <activity android:name=".WebViewActivity"/>
+
     </application>
 
 </manifest>

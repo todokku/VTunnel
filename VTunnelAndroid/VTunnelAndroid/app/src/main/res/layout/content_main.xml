@@ -38,5 +38,28 @@
 				android:layout_height="wrap_content"
 				android:text="@string/stop"/>
 
+		<EditText
+			android:id="@+id/search_src_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:hint="@string/google_search"
+			android:inputType="text"
+			android:maxLines="1"
+			android:minWidth="60dp"
+			android:singleLine="true"
+			android:autofillHints="" />
+
+		<Button
+			android:id="@+id/search_go_btn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/searchButton"/>
+
+		<Button
+			android:id="@+id/search_voice_btn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/image_search"/>
+
 	</LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,6 +26,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.thefinestartist.finestwebview.FinestWebView;
+
 import tun.proxy.service.Tun2HttpVpnService;
 
 import org.jsoup.Jsoup;
@@ -45,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     Button start;
     Button stop;
     EditText hostEditText;
+    EditText searchBox;
+    Button searchButton;
+    Button imageSearchButton;
     MenuItem menuSetting;
     Handler statusHandler = new Handler();
 
@@ -60,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
         start = findViewById(R.id.start);
         stop = findViewById(R.id.stop);
         hostEditText = findViewById(R.id.host);
+        searchBox = findViewById(R.id.search_src_text);
+        searchButton = findViewById(R.id.search_go_btn);
+        imageSearchButton = findViewById(R.id.search_voice_btn);
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,8 +106,23 @@ public class MainActivity extends AppCompatActivity {
                 stopVpn();
             }
         });
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchIt();
+            }
+        });
+        imageSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageSearch();
+            }
+        });
+
         start.setEnabled(true);
         stop.setEnabled(false);
+        searchButton.setEnabled(false);
+        imageSearchButton.setEnabled(false);
 
         loadHostPort();
 //        requestPermission();
@@ -173,6 +196,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         start.setEnabled(false);
         stop.setEnabled(false);
+        searchButton.setEnabled(false);
+        imageSearchButton.setEnabled(false);
         updateStatus();
 
         statusHandler.post(statusRunnable);
@@ -208,16 +233,22 @@ public class MainActivity extends AppCompatActivity {
             start.setEnabled(false);
             hostEditText.setEnabled(false);
             stop.setEnabled(true);
+            searchButton.setEnabled(true);
+            imageSearchButton.setEnabled(true);
         } else {
             start.setEnabled(true);
             hostEditText.setEnabled(true);
             stop.setEnabled(false);
+            searchButton.setEnabled(false);
+            imageSearchButton.setEnabled(false);
         }
     }
 
     private void stopVpn() {
         start.setEnabled(true);
         stop.setEnabled(false);
+        searchButton.setEnabled(false);
+        imageSearchButton.setEnabled(false);
         Tun2HttpVpnService.stop(this);
     }
 
@@ -230,6 +261,46 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private boolean searchIt() {
+        String searchItem = searchBox.getText().toString();
+        if (searchItem.isEmpty()) {
+            searchBox.setError("Enter valid search keyword.");
+            return false;
+        }
+        String searchItemInUrl = searchItem.replaceAll(" ", "%20");
+        URI url = URI.create("https://api.serpprovider.com/search?api_key=" + "API_KEY" + "&q=" + searchItemInUrl + "&device=mobile&output=html");
+        //searchBox.setText(url.toString());
+        new FinestWebView.Builder(this)
+                .titleDefault("Google Search")
+                .theme(R.style.FinestWebViewTheme)
+                .showUrl(false)
+                .showIconMenu(true)
+                .updateTitleFromHtml(false)
+                //.iconDefaultColorRes(R.color.finestWhite)
+                .show(url.toString());
+        return true;
+    }
+
+    private boolean imageSearch() {
+        String searchItem = searchBox.getText().toString();
+        if (searchItem.isEmpty()) {
+            searchBox.setError("Enter valid search keyword.");
+            return false;
+        }
+        String searchItemInUrl = searchItem.replaceAll(" ", "%20");
+        URI url = URI.create("https://api.serpprovider.com/search?api_key=" + "API_KEY" + "&q=" + searchItemInUrl + "&device=desktop&output=html&search_type=images");
+        //searchBox.setText(url.toString());
+        new FinestWebView.Builder(this)
+                .titleDefault("Google Image Search")
+                .theme(R.style.FinestWebViewTheme_Light)
+                .showUrl(false)
+                .showIconMenu(true)
+                .updateTitleFromHtml(false)
+                //.iconDefaultColorRes(R.color.finestGray)
+                .show(url.toString());
+        return true;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -239,6 +310,8 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_VPN && parseAndSaveHostPort()) {
             start.setEnabled(false);
             stop.setEnabled(true);
+            searchButton.setEnabled(true);
+            imageSearchButton.setEnabled(true);
             Tun2HttpVpnService.start(this);
         }
     }
